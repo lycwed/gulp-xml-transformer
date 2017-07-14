@@ -19,21 +19,20 @@ export function objectTransformer(transformations, doc, nsUri) {
       doc.get(transformation.path) :
       doc.get(transformation.path, nsUri);
 
-    if ({}.hasOwnProperty.call(indexedPaths, transformation.path) &&
-      indexedPaths[transformation.path].index) {
-      indexedPaths[transformation.path].index = indexedPaths[transformation.path].index + 1;
+    if (indexedPaths[transformation.path] && transformation.index) {
+      indexedPaths[transformation.path] += 1;
 
       if (!{}.hasOwnProperty.call(transformation, 'index')) {
         return;
       }
     }
 
-    if ({}.hasOwnProperty.call(transformation, 'index')) {
-      if (!{}.hasOwnProperty.call(indexedPaths, transformation.path)) {
-        indexedPaths[transformation.path] = { index: 0 };
+    if (transformation.index) {
+      if (!indexedPaths[transformation.path]) {
+        indexedPaths[transformation.path] = 0;
       }
 
-      if (indexedPaths[transformation.path].index !== transformation.index) {
+      if (indexedPaths[transformation.path] !== transformation.index) {
         return;
       }
     }
