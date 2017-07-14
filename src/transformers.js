@@ -23,12 +23,12 @@ export function objectTransformer(transformations, doc, nsUri) {
       indexedPaths[transformation.path].index) {
       indexedPaths[transformation.path].index += 1;
 
-      if (transformation.index === null) {
+      if (!{}.hasOwnProperty.call(transformation, 'index')) {
         return;
       }
     }
 
-    if (transformation.index !== null) {
+    if ({}.hasOwnProperty.call(transformation, 'index')) {
       if (!{}.hasOwnProperty.call(indexedPaths, transformation.path)) {
         indexedPaths[transformation.path] = { index: 0 };
       }
