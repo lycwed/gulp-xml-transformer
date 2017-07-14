@@ -21,7 +21,7 @@ export function objectTransformer(transformations, doc, nsUri) {
 
     if ({}.hasOwnProperty.call(indexedPaths, transformation.path) &&
       indexedPaths[transformation.path].index) {
-      indexedPaths[transformation.path].index += 1;
+      indexedPaths[transformation.path].index = indexedPaths[transformation.path].index + 1;
 
       if (!{}.hasOwnProperty.call(transformation, 'index')) {
         return;
