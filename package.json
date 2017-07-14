@@ -1,6 +1,6 @@
 {
-  "name": "gulp-xml-transformer",
-  "version": "1.2.0",
+  "name": "lycwed-gulp-xml-transformer",
+  "version": "1.0.0",
   "description": "Gulp plugin for transforming xml content",
   "main": "lib/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/perrin4869/gulp-xml-transformer.git"
+    "url": "git+ssh://git@github.com/lycwed/gulp-xml-transformer.git"
   },
   "keywords": [
     "gulpplugin",
@@ -23,12 +23,12 @@
     "xml",
     "libxmljs"
   ],
-  "author": "Julian Grinblat <julian@dotcore.co.il>",
+  "author": "lycwed",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/perrin4869/gulp-xml-transformer/issues"
+    "url": "https://github.com/lycwed/gulp-xml-transformer/issues"
   },
-  "homepage": "https://github.com/perrin4869/gulp-xml-transformer#readme",
+  "homepage": "https://github.com/lycwed/gulp-xml-transformer#readme",
   "dependencies": {
     "arrify": "^1.0.1",
     "gulp-util": "^3.0.8",

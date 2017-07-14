@@ -1,4 +1,4 @@
-# gulp-xml-transformer
+# lycwed-gulp-xml-transformer
 
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
@@ -11,7 +11,7 @@
 ## Install
 
 ```
-$ npm install --save-dev gulp-xml-transformer
+$ npm install --save-dev lycwed-gulp-xml-transformer
 ```
 
 Supports node >= 0.10
@@ -19,7 +19,7 @@ Supports node >= 0.10
 ## Usage
 
 ```javascript
-var xmlTransformer = require("gulp-xml-transformer");
+var xmlTransformer = require("lycwed-gulp-xml-transformer");
 
 /*
  * edit XML document by using user specific object
@@ -142,17 +142,17 @@ A string representing the Namespace URI of the elements to transform, or an obje
 
 See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
 
-[build-badge]: https://img.shields.io/travis/perrin4869/gulp-xml-transformer/master.svg?style=flat-square
-[build]: https://travis-ci.org/perrin4869/gulp-xml-transformer
+[build-badge]: https://img.shields.io/travis/lycwed/gulp-xml-transformer/master.svg?style=flat-square
+[build]: https://travis-ci.org/lycwed/gulp-xml-transformer
 
 [npm-badge]: https://img.shields.io/npm/v/gulp-xml-transformer.svg?style=flat-square
 [npm]: https://www.npmjs.org/package/gulp-xml-transformer
 
-[coveralls-badge]: https://img.shields.io/coveralls/perrin4869/gulp-xml-transformer/master.svg?style=flat-square
-[coveralls]: https://coveralls.io/r/perrin4869/gulp-xml-transformer
+[coveralls-badge]: https://img.shields.io/coveralls/lycwed/gulp-xml-transformer/master.svg?style=flat-square
+[coveralls]: https://coveralls.io/r/lycwed/gulp-xml-transformer
 
-[dependency-status-badge]: https://david-dm.org/perrin4869/gulp-xml-transformer.svg?style=flat-square
-[dependency-status]: https://david-dm.org/perrin4869/gulp-xml-transformer
+[dependency-status-badge]: https://david-dm.org/lycwed/gulp-xml-transformer.svg?style=flat-square
+[dependency-status]: https://david-dm.org/lycwed/gulp-xml-transformer
 
-[dev-dependency-status-badge]: https://david-dm.org/perrin4869/gulp-xml-transformer/dev-status.svg?style=flat-square
-[dev-dependency-status]: https://david-dm.org/perrin4869/gulp-xml-transformer#info=devDependencies
+[dev-dependency-status-badge]: https://david-dm.org/lycwed/gulp-xml-transformer/dev-status.svg?style=flat-square
+[dev-dependency-status]: https://david-dm.org/lycwed/gulp-xml-transformer#info=devDependencies
