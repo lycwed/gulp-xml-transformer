@@ -13,18 +13,29 @@ export function functionTransformer(tranformation, doc) {
 
 // edit XML document by user specific object
 export function objectTransformer(transformations, doc, nsUri) {
-  const pathToTreatOnce = [];
+  const indexedPaths = {};
   transformations.forEach((transformation) => {
     const elem = (nsUri === undefined) ?
       doc.get(transformation.path) :
       doc.get(transformation.path, nsUri);
 
-    if (pathToTreatOnce.indexOf(transformation.path) !== -1) {
-      return;
+    if ({}.hasOwnProperty.call(indexedPaths, transformation.path) &&
+      indexedPaths[transformation.path].index) {
+      indexedPaths[transformation.path].index += 1;
+
+      if (transformation.index === null) {
+        return;
+      }
     }
 
-    if (transformation.once) {
-      pathToTreatOnce.push(transformation.path);
+    if (transformation.index !== null) {
+      if (!{}.hasOwnProperty.call(indexedPaths, transformation.path)) {
+        indexedPaths[transformation.path] = { index: 0 };
+      }
+
+      if (indexedPaths[transformation.path].index !== transformation.index) {
+        return;
+      }
     }
 
     if (!(elem instanceof libxmljs.Element)) {

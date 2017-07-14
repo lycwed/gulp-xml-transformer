@@ -61,6 +61,22 @@ gulp.src("./manifest.xml")
   .pipe(gulp.dest("./dest"));
 
 /*
+ * edit XML document by target same paths' name
+ * 
+    ...
+    <preference name="webviewbounce" value=""/> // edit only this one
+    <preference name="UIWebViewBounce" value="false"/>
+    <preference name="DisallowOverscroll" value=""/> // and this one !
+    ...
+ */
+gulp.src("./manifest.xml")
+  .pipe(xmlTransformer([
+    { path: '//xmlns:preference', index: 0, attr: { 'value': false } },
+    { path: '//xmlns:preference', index: 2, attr: { 'value': true } }
+  ], 'http://www.w3.org/ns/widgets'))
+  .pipe(gulp.dest("./dest"));
+
+/*
  * edit XML document by using user specific function
  */
 gulp.src("./manifest.xml")
