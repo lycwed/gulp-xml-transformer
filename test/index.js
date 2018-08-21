@@ -1,17 +1,23 @@
 import File from 'vinyl';
-import { PassThrough } from 'stream';
-import { PluginError } from 'gulp-util';
+import {
+  PassThrough,
+} from 'stream';
+import {
+  PluginError,
+} from 'gulp-util';
 
 import es from 'event-stream';
-import { expect } from 'chai';
+import {
+  expect,
+} from 'chai';
 
 import tester from './tester';
-import tester2 from './tester2';
-import { readTestFile } from './helper';
+import {
+  readTestFile,
+} from './helper';
 import xmlTransformer from '../src';
 
 const testXml = readTestFile('test.xml');
-const test2Xml = readTestFile('test2.xml');
 const namespacedXml = readTestFile('namespaced.xml');
 
 describe('gulp-xml-editor', () => {
@@ -48,33 +54,6 @@ describe('gulp-xml-editor', () => {
 
       // Create a prefixer plugin stream
       const transformer = xmlTransformer(transformation, namespaces);
-      transformer.write(xmlFile);
-
-      // wait for the file to come back out
-      transformer.once('data', (file) => {
-        // make sure it came out the same way it went in
-        expect(file.isStream()).to.equal(true);
-
-        // buffer the contents to make sure it got prepended to
-        file.contents.pipe(es.wait((err, data) => {
-          // check the contents
-          expect(data.toString()).to.equal(expectation);
-          done();
-        }));
-      });
-    });
-  });
-
-  describe('in streaming mode', () => {
-    tester2((transformation, expectation, done) => {
-      // create the fake file
-      const xmlFile = new File({
-        contents: new PassThrough(),
-      });
-      xmlFile.contents.end(test2Xml);
-
-      // Create a prefixer plugin stream
-      const transformer = xmlTransformer(transformation);
       transformer.write(xmlFile);
 
       // wait for the file to come back out
@@ -134,37 +113,33 @@ describe('gulp-xml-editor', () => {
     });
   });
 
-  describe('in buffering mode', () => {
-    tester2((transformation, expectation, done) => {
-      // create the fake file
-      const xmlFile = new File({
-        contents: new Buffer(test2Xml),
-      });
-
-      // Create a prefixer plugin stream
-      const converter = xmlTransformer(transformation);
-      converter.write(xmlFile);
-
-      // wait for the file to come back out
-      converter.once('data', (file) => {
-        // make sure it came out the same way it went in
-        expect(file.isBuffer()).to.equal(true);
-
-        // buffer the contents to make sure it got prepended to
-        expect(file.contents.toString()).to.equal(expectation);
-        done();
-      });
-    });
-  });
-
   describe('null file', () => {
     it('should return empty ', (done) => {
       xmlTransformer(() => {})
-      .on('data', (file) => {
-        expect(file.isNull()).to.equal(true);
-        done();
-      })
-      .write(new File({}));
+        .on('data', (file) => {
+          expect(file.isNull()).to.equal(true);
+          done();
+        })
+        .write(new File({}));
+    });
+  });
+
+  describe('isMandatory', () => {
+    it('should not throw error when isMandatory is false', (done) => {
+      const transformer = xmlTransformer({
+        path: '//invalid',
+        text: '',
+        isMandatory: false,
+      });
+      transformer.on('error', err => done(err))
+        .once('data', (file) => {
+          // contents should not have changed
+          expect(file.contents.toString()).to.equal(testXml);
+          done();
+        })
+        .write(new File({
+          contents: new Buffer(testXml),
+        }));
     });
   });
 
@@ -192,7 +167,10 @@ describe('gulp-xml-editor', () => {
     });
 
     it('should raise an error when passing an xpath which cannot be not found', (done) => {
-      const transformer = xmlTransformer({ path: '//invalid', text: '' });
+      const transformer = xmlTransformer({
+        path: '//invalid',
+        text: '',
+      });
       transformer.on('error', (err) => {
         expect(err).to.be.instanceof(Error);
         expect(err.message).to.equal('Can\'t find element at "//invalid"');
@@ -204,7 +182,10 @@ describe('gulp-xml-editor', () => {
     });
 
     it('should raise an error when passing an xpath with no path to element', (done) => {
-      const transformer = xmlTransformer({ path: '//version/@major', text: '' });
+      const transformer = xmlTransformer({
+        path: '//version/@major',
+        text: '',
+      });
       transformer.on('error', (err) => {
         expect(err).to.be.instanceof(Error);
         expect(err.message).to.equal('Can\'t find element at "//version/@major"');

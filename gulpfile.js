@@ -6,28 +6,36 @@ const eslint = require('gulp-eslint');
 
 const src = 'src/*.js';
 
-gulp.task('lint', () => (
-  gulp.src([src, 'test/*.js'])
-  .pipe(eslint())
-  .pipe(eslint.format())
-));
+const lint = () => {
+  return gulp.src([src, 'test/*.js'])
+    .pipe(eslint())
+    .pipe(eslint.format());
+};
 
-gulp.task('build', ['lint'], () => (
-  gulp.src(src)
-  .pipe(babel())
-  .pipe(gulp.dest('lib'))
-));
+const build = () => {
+  return gulp.src(src)
+    .pipe(babel())
+    .pipe(gulp.dest('lib'));
+};
 
-gulp.task('test', ['lint'], () => (
-  gulp.src('test')
-  .pipe(mocha())
-  .on('error', util.log)
-));
+const test = () => {
+  return gulp.src('test')
+    .pipe(mocha())
+    .on('error', util.log);
+};
 
-gulp.task('watch', () => {
-  gulp.watch(src, ['test']);
-});
+const watch = () => {
+  gulp.watch(src, gulp.series(['test']));
+};
 
-gulp.task('develop', ['watch']);
+gulp.task('lint', lint);
 
-gulp.task('default', ['develop']);
+gulp.task('build', gulp.series(['lint'], build));
+
+gulp.task('test', gulp.series(['lint'], test));
+
+gulp.task('watch', watch);
+
+gulp.task('develop', watch);
+
+gulp.task('default', watch);
